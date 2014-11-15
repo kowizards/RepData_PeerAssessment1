@@ -24,10 +24,10 @@ data$date <- as.Date(data$date)
 
 ```r
 totalStepPerday <- tapply(data$steps, data$date, sum)
-hist(totalStepPerday)
+hist(totalStepPerday, xlab='Total Step Per Day')
 ```
 
-![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3.png) 
+![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png) 
 
 2.Calculate and report the **mean** and **median** total number of steps taken per day
 
@@ -36,7 +36,7 @@ mean(totalStepPerday, na.rm=TRUE)
 ```
 
 ```
-## [1] 10766
+## [1] 10766.19
 ```
 
 ```r
@@ -52,10 +52,10 @@ median(totalStepPerday, na.rm=TRUE)
 
 ```r
 averageStepPerinterval <- tapply(data$steps, as.factor(data$interval), function(x) mean(x, na.rm=TRUE))
-plot(data$interval[1:length(averageStepPerinterval)], averageStepPerinterval, type='l', xlab='interval')
+plot(data$interval[1:length(averageStepPerinterval)], averageStepPerinterval, type='l', xlab='Minutes of Day')
 ```
 
-![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5.png) 
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png) 
 
 2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
@@ -91,17 +91,17 @@ data2$steps[is.na(data2$steps)] <- rep(averageStepPerinterval, length(totalStepP
 
 ```r
 totalStepPerdayV2 <- tapply(data2$steps, data2$date, sum)
-hist(totalStepPerdayV2)
+hist(totalStepPerdayV2, xlab='Total Step Per Day (after imputing)')
 ```
 
-![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9.png) 
+![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png) 
 
 ```r
 mean(totalStepPerdayV2)
 ```
 
 ```
-## [1] 10766
+## [1] 10766.19
 ```
 
 ```r
@@ -109,7 +109,7 @@ median(totalStepPerdayV2)
 ```
 
 ```
-## [1] 10766
+## [1] 10766.19
 ```
 
 The mean value does not change, but the median is different than before. Imputing missing data may change some statistical result.
@@ -128,7 +128,7 @@ data2$dateType <- as.factor(data2$dateType)
 ```r
 library(lattice)
 xyplot(steps ~ interval | dateType, data=data2,
-       layout=c(1, 2), type='l', ylim=c(0, 250), ylab='Number of steps',
+       layout=c(1, 2), type='l', ylim=c(0, 250), xlab='Minitues of Day', ylab='Number of steps',
        panel = function(x, y, ...){
          ty <- tapply(y, as.factor(x), mean)
          tx <- x[1:length(levels(as.factor(x)))]
@@ -136,5 +136,5 @@ xyplot(steps ~ interval | dateType, data=data2,
        })
 ```
 
-![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11.png) 
+![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11-1.png) 
 
